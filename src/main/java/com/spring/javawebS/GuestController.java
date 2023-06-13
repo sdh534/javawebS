@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.spring.javawebS.pagination.PageProcess;
+import com.spring.javawebS.pagination.PageVO;
 import com.spring.javawebS.service.GuestService;
 import com.spring.javawebS.vo.GuestVO;
 
@@ -21,33 +23,41 @@ public class GuestController {
 	@Autowired
 	GuestService guestService;
 	
+	@Autowired
+	PageProcess pageProcess;
+	
 	@RequestMapping(value = "/guestList", method = RequestMethod.GET)
 	public String guestListGet(
 			@RequestParam(name = "pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name = "pageSize", defaultValue = "3", required = false) int pageSize,
 			Model model) {
-		int totRecCnt = guestService.totRecCnt();
-		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt/pageSize : (totRecCnt/pageSize) + 1 ;
-		int startIndexNo = (pag - 1) * pageSize;
-		int curScrStartNo = totRecCnt - startIndexNo;
+//		int totRecCnt = guestService.totRecCnt();
+//		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt/pageSize : (totRecCnt/pageSize) + 1 ;
+//		int startIndexNo = (pag - 1) * pageSize;
+//		int curScrStartNo = totRecCnt - startIndexNo;
+//		
+//		int blockSize = 3;
+//		int curBlock = (pag - 1) / blockSize;
+//		int lastBlock = (totPage - 1) / blockSize;
+//		
+//		model.addAttribute("pag",pag);
+//		model.addAttribute("pageSize",pageSize);
+//		model.addAttribute("totRecCnt",totRecCnt);
+//		model.addAttribute("blockSize",blockSize);
+//		model.addAttribute("totPage",totPage);
+//		model.addAttribute("curScrStartNo",curScrStartNo);
+//		model.addAttribute("curBlock",curBlock);
+//		model.addAttribute("lastBlock",lastBlock);
+//		
 		
-		int blockSize = 3;
-		int curBlock = (pag - 1) / blockSize;
-		int lastBlock = (totPage - 1) / blockSize;
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "guest", "", "");
+		ArrayList<GuestVO> vos = guestService.getGuestList(pageVO.getStartIndexNo(), pageSize);
+		model.addAttribute("pageVO", pageVO);
+		model.addAttribute("vos", vos);
 		
-		model.addAttribute("pag",pag);
-		model.addAttribute("pageSize",pageSize);
-		model.addAttribute("totRecCnt",totRecCnt);
-		model.addAttribute("blockSize",blockSize);
-		model.addAttribute("totPage",totPage);
-		model.addAttribute("curScrStartNo",curScrStartNo);
-		model.addAttribute("curBlock",curBlock);
-		model.addAttribute("lastBlock",lastBlock);
-		ArrayList<GuestVO> vos = guestService.getGuestList(startIndexNo, pageSize);
-		
-		model.addAttribute("vos",vos);
 		return "guest/guestList";
 	}
+	
 	@RequestMapping(value = "/guestInput", method = RequestMethod.GET)
 	public String guestInputGet() {
 		return "guest/guestInput";
@@ -59,10 +69,12 @@ public class GuestController {
 		if(res == 1) return "redirect:/message/guestInputOk";
 		else return "redirect:/message/guestInputNo";
 	}
+	
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
 	public String adminLoginGet() {
 		return "guest/adminLogin";
 	}
+	
 	@RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
 	public String adminLoginPost(
 			HttpServletRequest request,
@@ -83,5 +95,16 @@ public class GuestController {
 	public String adminLogoutGet(HttpSession session) {
 		session.invalidate();
 		return "redirect:/message/adminLogout";
+	}
+	
+	//방명록 글삭제
+	@RequestMapping(value = "/guestDelete", method = RequestMethod.GET)
+	public String guestDeleteGet(	@RequestParam(value = "idx", defaultValue = "0", required = false) int idx) {
+		int res = guestService.setGuestDelete(idx);
+		
+		if(res==1) 
+			return "redirect:/message/guestDeleteOk";
+		else
+			return "redirect:/message/guestDeleteNo";
 	}
 }

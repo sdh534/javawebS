@@ -13,4 +13,7 @@
 		select count(*) from guest2;
 	</select>
 	
+	<delete id="setGuestDelete">
+		delete from guest2 where idx = #{idx};
+	</delete>
 </mapper>

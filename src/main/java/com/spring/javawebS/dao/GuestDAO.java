@@ -13,6 +13,8 @@ public interface GuestDAO {
 	public int setGuestInput(@Param("vo") GuestVO vo);
 
 	public int totRecCnt();
+
+	public int setGuestDelete(@Param("idx") int idx);
 	
 	
 	
