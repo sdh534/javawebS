@@ -1,5 +1,7 @@
 package com.spring.javawebS.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.javawebS.vo.MemberVO;
@@ -14,4 +16,9 @@ public interface MemberDAO {
 
 	public void setMemberVisitProcess(@Param("vo") MemberVO vo);
 
+	public ArrayList<MemberVO> getMemberList(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("mid") String mid);
+
+	public void setMemberPwdUpdate(@Param("mid") String mid, @Param("pwd") String pwd);
+
+	public int totRecCnt();
 }

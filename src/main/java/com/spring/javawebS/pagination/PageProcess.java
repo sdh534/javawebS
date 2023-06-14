@@ -4,18 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.javawebS.dao.GuestDAO;
+import com.spring.javawebS.dao.MemberDAO;
 
 @Service
 public class PageProcess {
 
 	@Autowired
 	GuestDAO guestDAO; 
+	@Autowired
+	MemberDAO memberDAO;
 	
 	public PageVO totRecCnt(int pag, int pageSize, String section, String part, String searchString) {
 		PageVO pageVO = new PageVO();
 		int totRecCnt = 0;
 		if(section.equals("guest")) totRecCnt = guestDAO.totRecCnt();
-//		else if(section.equals("member")) totRecCnt = memberDAO.totRecCnt();
+		else if(section.equals("member")) totRecCnt = memberDAO.totRecCnt();
 //		else if(section.equals("board")) totRecCnt = boardDAO.totRecCnt();
 		
 		int totPage = (totRecCnt % pageSize) == 0 ? totRecCnt/pageSize : (totRecCnt/pageSize) + 1 ;

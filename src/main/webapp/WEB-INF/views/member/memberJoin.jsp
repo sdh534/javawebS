@@ -150,6 +150,7 @@
     					hobbys += document.getElementsByName("hobby")[i].value + "/";
     				}
     			}
+    			//alert("hobbys : " + hobbys);
     			
 	    		myform.email.value = email;
 	    		myform.tel.value = tel;
