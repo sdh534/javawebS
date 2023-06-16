@@ -3,6 +3,7 @@ package com.spring.javawebS.pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.javawebS.dao.BoardDAO;
 import com.spring.javawebS.dao.GuestDAO;
 
 @Service
@@ -10,7 +11,8 @@ public class PageProcess {
 
 	@Autowired
 	GuestDAO guestDAO;
-	
+	@Autowired
+	BoardDAO boardDAO;
 	public PageVO totRecCnt(int pag, int pageSize, String section, String part, String searchString) {
 		PageVO pageVO = new PageVO();
 		
@@ -18,7 +20,7 @@ public class PageProcess {
 		
 		if(section.equals("guest"))	totRecCnt = guestDAO.totRecCnt();
 //		else if(section.equals("member"))	totRecCnt = memberDAO.totRecCnt();
-//		else if(section.equals("board"))	totRecCnt = boardDAO.totRecCnt();
+		else if(section.equals("board"))	totRecCnt = boardDAO.totRecCnt();
 		
 		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt /pageSize : (totRecCnt / pageSize) + 1;
 		int startIndexNo = (pag - 1) * pageSize;

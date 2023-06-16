@@ -150,6 +150,14 @@ public class MessageController {
 		else if(msgFlag.equals("memberDeleteNo")) {
 			model.addAttribute("msg", "회원 탈퇴 실패~~");
 		}
+		else if(msgFlag.equals("boardInputOk")) {
+			model.addAttribute("msg", "게시글 등록 완료");
+			model.addAttribute("url", "/board/boardList");
+		}
+		else if(msgFlag.equals("boardInputNo")) {
+			model.addAttribute("msg", "게시글 등록 실패");
+			model.addAttribute("url", "/board/boardInput");
+		}
 		
 		
 		

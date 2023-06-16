@@ -11,7 +11,7 @@
     <%-- <a href="${ctp}/" class="w3-bar-item w3-button w3-padding-large">HOME</a> --%>
     <a href="${ctp}/guest/guestList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Guest</a>
     <c:if test="${sLevel <= 3}">
-	    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Board</a>
+	    <a href="${ctp}/board/boardList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Board</a>
 	    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Pds</a>
 	    <div class="w3-dropdown-hover w3-hide-small">
 	      <button class="w3-padding-large w3-button" title="More">Study1 <i class="fa fa-caret-down"></i></button>     
