@@ -14,6 +14,10 @@
   	select * from member2 <if test="mid != ''"> where mid like concat('%',#{mid},'%') </if> order by idx desc limit #{startIndexNo},#{pageSize};
   </select>
   
+  <select id="totRecCnt" resultType="int">
+    select count(*) from member2 <if test="mid != ''"> where mid like concat('%',#{mid},'%') </if>;
+  </select>
+  
   
   
   <insert id="setMemberJoinOk">
@@ -21,10 +25,6 @@
   </insert>
   
   
-  
-  <update id="setMemberDeleteOk">
-  	update member2 set userDel='OK' where mid = #{mid};
-  </update>
   
   <update id="setMemberVisitProcess">
   	update member2 set visitCnt=visitCnt+1, todayCnt=todayCnt+1, point=point+10, lastDate=now() where mid = #{vo.mid};
@@ -36,6 +36,10 @@
   
   <update id="setMemberUpdateOk">
     update member2 set nickName=#{vo.nickName},name=#{vo.name},gender=#{vo.gender},birthday=#{vo.birthday},tel=#{vo.tel},address=#{vo.address},email=#{vo.email},homePage=#{vo.homePage},job=#{vo.job},hobby=#{vo.hobby},photo=#{vo.photo},content=#{vo.content},userInfor=#{vo.userInfor} where mid=#{vo.mid};
+  </update>
+  
+  <update id="setMemberDeleteOk">
+    update member2 set userDel = 'OK' where mid = #{mid};
   </update>
   
 </mapper>

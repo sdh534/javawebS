@@ -13,6 +13,9 @@ public class MessageController {
 	@RequestMapping(value = "/message/{msgFlag}", method = RequestMethod.GET)
 	public String listGet(@PathVariable String msgFlag,
 			@RequestParam(name="mid", defaultValue = "", required=false) String mid,
+			@RequestParam(name="idx", defaultValue = "0", required=false) int idx,
+			@RequestParam(name="pag", defaultValue = "1", required=false) int pag,
+			@RequestParam(name="pageSize", defaultValue = "5", required=false) int pageSize,
 			Model model) {
 		
 		if(msgFlag.equals("guestInputOk")) {
@@ -157,6 +160,14 @@ public class MessageController {
 		else if(msgFlag.equals("boardInputNo")) {
 			model.addAttribute("msg", "게시글 등록 실패");
 			model.addAttribute("url", "/board/boardInput");
+		}
+		else if(msgFlag.equals("boardDeleteOk")) {
+			model.addAttribute("msg", "게시글 삭제 완료");
+			model.addAttribute("url", "/board/boardList");
+		}
+		else if(msgFlag.equals("boardDeleteNo")) {
+			model.addAttribute("msg", "게시글 삭제 실패");
+			model.addAttribute("url", "/board/boardContent?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);
 		}
 		
 		

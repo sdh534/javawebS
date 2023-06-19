@@ -15,18 +15,42 @@
   </select>
   
   <select id="getPrevNext" resultType="com.spring.javawebS.vo.BoardVO">
-     select idx,title from board2 where idx in (
+    select idx,title from board2 where idx in (
 		  (select idx from board2 where <![CDATA[idx < #{idx}]]> order by idx desc limit 1),
 		  (select idx from board2 where <![CDATA[idx > #{idx}]]> limit 1));
   </select>
+   
+  <select id="totRecCntSearch" resultType="int">
+    select count(*) from board2 where ${search} like concat('%',#{searchString},'%');
+  </select>
+  
+  <select id="getBoardListSearch" resultType="com.spring.javawebS.vo.BoardVO">
+    select * from board2 where ${search} like concat('%',#{searchString},'%') order by idx desc limit #{startIndexNo},#{pageSize};
+  </select>
+  
   
   <insert id="setBoardInput">
     insert into board2 values (default,#{vo.mid},#{vo.nickName},#{vo.title},#{vo.email},#{vo.homePage},#{vo.content},default,#{vo.hostIp},#{vo.openSw},default,default);
   </insert>
   
   
+  
   <update id="setBoardReadNum">
     update board2 set readNum = readNum + 1 where idx = #{idx};
   </update>
+  
+  <update id="boardGoodFlagCheck">
+    update board2 set good = good + #{gFlag} where idx = #{idx};
+  </update>
+  
+  <update id="setBoardUpdate">
+    update board2 set title=#{vo.title},email=#{vo.email},homePage=#{vo.homePage},content=#{vo.content},hostIp=#{vo.hostIp},openSw=#{vo.openSw},wDate=now() where idx = #{vo.idx};
+  </update>
+  
+  
+  
+  <delete id="setBoardDelete">
+    delete from board2 where idx = #{idx};
+  </delete>
   
 </mapper>

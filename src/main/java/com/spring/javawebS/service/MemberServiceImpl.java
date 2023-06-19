@@ -107,8 +107,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int setMemberDeleteOk(String mid) {
-		return memberDAO.setMemberDeleteOk(mid);
+	public void setMemberDeleteOk(String mid) {
+		memberDAO.setMemberDeleteOk(mid);
 	}
 	
 }

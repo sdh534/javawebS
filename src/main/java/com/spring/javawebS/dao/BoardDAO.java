@@ -21,4 +21,14 @@ public interface BoardDAO {
 
 	public ArrayList<BoardVO> getPrevNext(@Param("idx") int idx);
 
+	public void boardGoodFlagCheck(@Param("idx") int idx, @Param("gFlag") int gFlag);
+
+	public int totRecCntSearch(@Param("search") String search, @Param("searchString") String searchString);
+
+	public List<BoardVO> getBoardListSearch(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("search") String search, @Param("searchString") String searchString);
+
+	public int setBoardDelete(@Param("idx") int idx);
+
+	public int setBoardUpdate(@Param("vo") BoardVO vo);
+
 }
